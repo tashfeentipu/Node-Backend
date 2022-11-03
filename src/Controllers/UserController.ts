@@ -1,29 +1,22 @@
-import { Controller, Param, Body, Get, Post, Put, Delete } from 'routing-controllers';
+import { Body, Controller, Get, Post } from 'routing-controllers';
+import { UserService } from "../Services/UserServices";
+import { LoginRequest, SignUpRequest } from '../Types/Users';
 
-@Controller()
+@Controller("/users")
 export class UserController {
-  @Get('/users')
-  getAll() {
-    return 'This action returns all users';
-  }
 
-  @Get('/users/:id')
-  getOne(@Param('id') id: number) {
-    return 'This action returns user #' + id;
-  }
+    userService: UserService = new UserService()
 
-  @Post('/users')
-  post(@Body() user: any) {
-    return 'Saving user...';
-  }
+    @Get('/login')
+    async loginController(@Body() loginRequest: LoginRequest): Promise<any> {
+        return await this.userService.loginService(loginRequest);
+    }
 
-  @Put('/users/:id')
-  put(@Param('id') id: number, @Body() user: any) {
-    return 'Updating a user...';
-  }
+    @Post('/signUp')
+    async signUp(@Body() signUpRequest: SignUpRequest): Promise<any> {
+console.log(signUpRequest);
 
-  @Delete('/users/:id')
-  remove(@Param('id') id: number) {
-    return 'Removing user...';
-  }
+        // return await this.userService.signUpService(signUpRequest);
+        return true
+    }
 }
