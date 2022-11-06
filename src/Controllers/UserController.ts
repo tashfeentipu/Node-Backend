@@ -1,11 +1,13 @@
 import { Body, Get, JsonController, Post } from 'routing-controllers';
+import { Service } from 'typedi';
 import { UserService } from "../Services/UserServices";
 import { LoginRequest, SignUpRequest } from '../Types/Users';
 
 @JsonController("/users")
+@Service()
 export class UserController {
 
-    userService: UserService = new UserService()
+    constructor(private userService: UserService) { }
 
     @Get('/login')
     async loginController(@Body() loginRequest: LoginRequest): Promise<any> {

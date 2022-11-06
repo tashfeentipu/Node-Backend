@@ -5,5 +5,5 @@ export const initializeServer = () => {
     // Initialize DB
     mongoConfig()
     //Initialize Server
-    server()
+    server(__dirname)
 }

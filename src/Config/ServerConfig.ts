@@ -1,12 +1,16 @@
 import "reflect-metadata";
-import { createExpressServer } from 'routing-controllers';
-import { exportControllers } from "../Controllers";
+import { createExpressServer, useContainer } from 'routing-controllers';
 import { authChecker } from "../Validations/AuthChecker";
 
+import { Container } from 'typedi';
+
 // creates express app, registers all controller routes and returns you express app instance
-export const server = () => {
+export const server = (dirname: string) => {
+
+    useContainer(Container);    
+
     const app = createExpressServer({
-        controllers: exportControllers, // we specify controllers we want to use
+        controllers: [dirname + "/Controllers/*.ts"], // we specify controllers we want to use
         authorizationChecker: authChecker
     });
     const port = process.env["PORT"]

@@ -1,8 +1,10 @@
+import { Service } from "typedi";
 import { UserRepository } from "../Repositories/UserRepository";
 import { LoginRequest, SignUpRequest } from "../Types/Users";
 
+@Service()
 export class UserService {
-    userRepository: UserRepository = new UserRepository()
+    constructor(private userRepository: UserRepository){}
 
     loginService = async (loginRequest: LoginRequest): Promise<any> => {
         let result = await this.userRepository.getLoginData(loginRequest.email);

@@ -1,6 +1,8 @@
+import { Service } from "typedi";
 import Users from "../Schema/Users";
 import { SignUpRequest } from "../Types/Users";
 
+@Service()
 export class UserRepository {
 
     getLoginData = async (email: string): Promise<any> => {

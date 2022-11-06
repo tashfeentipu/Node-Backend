@@ -5,5 +5,5 @@ export const authChecker = async (action: Action, roles: string[]) => {
 
     if (token.slice(7, token.length).trimLeft() === "xyz") return true;
 
-    return false;
+    throw new Error("Not Authorized");
 }
