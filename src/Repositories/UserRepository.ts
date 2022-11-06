@@ -8,8 +8,6 @@ export class UserRepository {
     }
 
     postSignUpData = async (signUpData: SignUpRequest): Promise<boolean> => {
-        console.log(signUpData);
-        
         try {
             await new Users(signUpData).save();
             return true;            
