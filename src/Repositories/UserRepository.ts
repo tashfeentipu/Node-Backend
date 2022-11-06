@@ -5,14 +5,14 @@ import { SignUpRequest } from "../Types/Users";
 @Service()
 export class UserRepository {
 
-    getLoginData = async (email: string): Promise<any> => {
-        return Users.findOne({ email });
+    async getUser(email: string): Promise<any> {
+        return JSON.parse(JSON.stringify(await Users.findOne({ email })));
     }
 
-    postSignUpData = async (signUpData: SignUpRequest): Promise<boolean> => {
+    async saveUser(signUpData: SignUpRequest): Promise<boolean> {
         try {
             await new Users(signUpData).save();
-            return true;            
+            return true;
         } catch (error) {
             return false
         }

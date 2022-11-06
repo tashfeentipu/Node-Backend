@@ -11,7 +11,7 @@ export class UserController {
 
     @Get('/login')
     async loginController(@Body() loginRequest: LoginRequest): Promise<any> {
-        return await this.userService.loginService(loginRequest);
+        return { token: await this.userService.loginService(loginRequest) };
     }
 
     @Post('/signUp')
