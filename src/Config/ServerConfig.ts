@@ -1,11 +1,13 @@
-import "reflect-metadata"
+import "reflect-metadata";
 import { createExpressServer } from 'routing-controllers';
-import { UserController } from '../Controllers/UserController';
+import { exportControllers } from "../Controllers";
+import { authChecker } from "../Validations/AuthChecker";
 
 // creates express app, registers all controller routes and returns you express app instance
 export const server = () => {
     const app = createExpressServer({
-        controllers: [UserController], // we specify controllers we want to use
+        controllers: exportControllers, // we specify controllers we want to use
+        authorizationChecker: authChecker
     });
     const port = process.env["PORT"]
     // run express application on port 3000

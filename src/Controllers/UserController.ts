@@ -1,4 +1,4 @@
-import { Body, Controller, Get, JsonController, Post } from 'routing-controllers';
+import { Body, Get, JsonController, Post } from 'routing-controllers';
 import { UserService } from "../Services/UserServices";
 import { LoginRequest, SignUpRequest } from '../Types/Users';
 
