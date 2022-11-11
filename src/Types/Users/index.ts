@@ -3,8 +3,15 @@ export interface LoginRequest {
     password: string
 }
 
+export interface WalletLoginRequest {
+    walletAddress: string
+    txHash: string
+}
+
 export interface SignUpRequest {
-    email: string
-    password: string
+    email?: string
+    password?: string
     contact?: string
+    publicKey?: string
+    nonce?: string
 }

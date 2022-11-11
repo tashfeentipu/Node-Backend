@@ -9,6 +9,10 @@ export class UserRepository {
         return JSON.parse(JSON.stringify(await Users.findOne({ email })));
     }
 
+    async getNonce(publicKey: string): Promise<any> {
+        return JSON.parse(JSON.stringify(await Users.findOne({ publicKey }).select("nonce")));
+    }
+
     async saveUser(signUpData: SignUpRequest): Promise<boolean> {
         try {
             await new Users(signUpData).save();

@@ -1,4 +1,4 @@
-import { Body, Get, JsonController, Post } from 'routing-controllers';
+import { Body, Get, JsonController, Post, QueryParam } from 'routing-controllers';
 import { Service } from 'typedi';
 import { UserService } from "../Services/UserServices";
 import { LoginRequest, SignUpRequest } from '../Types/Users';
@@ -9,9 +9,19 @@ export class UserController {
 
     constructor(private userService: UserService) { }
 
-    @Get('/login')
+    @Post('/login')
     async loginController(@Body() loginRequest: LoginRequest): Promise<any> {
-        return { token: await this.userService.loginService(loginRequest) };
+        return await this.userService.loginService(loginRequest)
+    }
+
+    @Get('/walletLogin')
+    async walletLoginController(@Body() loginRequest: LoginRequest): Promise<any> {
+        return await this.userService.loginService(loginRequest)
+    }
+
+    @Get('/getNonce')
+    async getNonceController(@QueryParam("pubKey") pubKey: string): Promise<any> {
+        return await this.userService.nonceService(pubKey)
     }
 
     @Post('/signUp')
