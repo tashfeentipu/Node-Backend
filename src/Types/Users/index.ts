@@ -4,8 +4,8 @@ export interface LoginRequest {
 }
 
 export interface WalletLoginRequest {
-    walletAddress: string
     txHash: string
+    publicKey: string
 }
 
 export interface SignUpRequest {

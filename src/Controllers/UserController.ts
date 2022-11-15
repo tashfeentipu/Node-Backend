@@ -1,7 +1,7 @@
 import { Body, Get, JsonController, Post, QueryParam } from 'routing-controllers';
 import { Service } from 'typedi';
 import { UserService } from "../Services/UserServices";
-import { LoginRequest, SignUpRequest } from '../Types/Users';
+import { LoginRequest, SignUpRequest, WalletLoginRequest } from '../Types/Users';
 
 @JsonController("/users")
 @Service()
@@ -14,9 +14,9 @@ export class UserController {
         return await this.userService.loginService(loginRequest)
     }
 
-    @Get('/walletLogin')
-    async walletLoginController(@Body() loginRequest: LoginRequest): Promise<any> {
-        return await this.userService.loginService(loginRequest)
+    @Post('/walletLogin')
+    async walletLoginController(@Body() walletLoginRequest: WalletLoginRequest): Promise<any> {
+        return await this.userService.walletLoginService(walletLoginRequest)
     }
 
     @Get('/getNonce')
