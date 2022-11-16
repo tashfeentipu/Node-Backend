@@ -2,7 +2,8 @@ import { Service } from "typedi";
 import Web3 from "web3";
 import { UserRepository } from "../Repositories/UserRepository";
 import { LoginRequest, SignUpRequest, WalletLoginRequest } from "../Types/Users";
-import * as ethUtil from 'ethereumjs-util';
+import { DecodeAddress, nonceString } from './../Helpers/DecodeAddress';
+import { sendVerificationEmail } from "./EmailService";
 const jwt = require('jsonwebtoken');
 
 @Service()
@@ -24,19 +25,8 @@ export class UserService {
     walletLoginService = async (walletLoginRequest: WalletLoginRequest): Promise<any> => {
         try {
             const user = await this.userRepository.getUser({ publicKey: walletLoginRequest.publicKey });
-            const msgToSign = `I want to sign ${user.nonce}`
-            const msgBuffer = ethUtil.toBuffer(this.web3.utils.toHex(msgToSign));
-            const msgHash = ethUtil.hashPersonalMessage(msgBuffer);
-            const signatureParams = ethUtil.fromRpcSig(walletLoginRequest.txHash);
-            const publicKey = ethUtil.ecrecover(
-                msgHash,
-                signatureParams.v,
-                signatureParams.r,
-                signatureParams.s
-            );
-            const addressBuffer = ethUtil.publicToAddress(publicKey);
-            const address = ethUtil.bufferToHex(addressBuffer);
-           
+            const address = DecodeAddress(nonceString(user.nonce), walletLoginRequest.txHash);
+
             if (address === walletLoginRequest.publicKey) {
                 const token = jwt.sign(user, process.env["JWT_SECRET"]);
                 return { token }
@@ -47,7 +37,9 @@ export class UserService {
     }
 
     nonceService = async (pubKey: string): Promise<any> => {
-        return await this.userRepository.getNonce(pubKey);
+        const user = await this.userRepository.getNonce(pubKey);
+        sendVerificationEmail();
+        return nonceString(user.nonce)
     }
 
     signUpService = async (signUpData: SignUpRequest): Promise<boolean> => {
