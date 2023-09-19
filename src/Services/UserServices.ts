@@ -1,7 +1,7 @@
 import { Service } from "typedi";
 import Web3 from "web3";
 import { UserRepository } from "../Repositories/UserRepository";
-import { LoginRequest, SignUpRequest, WalletLoginRequest } from "../Types/Users";
+import { LoginRequest, SignUpRequest, WalletLoginRequest } from "../Types/Requests/users";
 import { DecodeAddress, nonceString } from './../Helpers/DecodeAddress';
 import { sendVerificationEmail } from "./EmailService";
 const jwt = require('jsonwebtoken');

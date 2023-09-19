@@ -1,6 +1,6 @@
 import { Service } from "typedi";
 import Users from "../Schema/Users";
-import { SignUpRequest } from "../Types/Users";
+import { SignUpRequest } from "../Types/Requests/users";
 
 @Service()
 export class UserRepository {
